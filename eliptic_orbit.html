@@ -21,7 +21,7 @@
                 // sphere and matrices
                 var geometry = new THREE.SphereBufferGeometry(
                     2, 50, 50, 0, Math.PI * 2, 0, Math.PI * 2 );
-                var material = new THREE.MeshNormalMaterial( {color: 0xfffff0} );
+                var material = new THREE.MeshNormalMaterial();
                 var sphere = new THREE.Mesh( geometry, material );
                 return sphere
             }
