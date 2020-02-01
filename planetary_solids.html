@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Galactic Watch</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+        <script src="js/three.js"></script>
+        <script src="js/OrbitControls.js"></script>
+		<script>
+
+			// Perspective is one of a few cameras
+			// FOV - first param is in degrees
+			var camera = new THREE.PerspectiveCamera( 
+				70, window.innerWidth / window.innerHeight, 1, 20 );
+            var scene = new THREE.Scene();
+            var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+            camera.position.z = 8;
+
+            // Ellipse class, which extends the virtual base class Curve
+            function Ellipse( xRadius, yRadius ) {
+                THREE.Curve.call( this );
+                // add radius as a property
+                this.xRadius = xRadius;
+                this.yRadius = yRadius;
+            }
+            
+            // Planetory Distances from Sun - Computed from Kepler's Mysterium Ch.XV (src/planet_positions.py)
+            // saturn: {'high': 183.93228895793544, 'low': 153.88649309560518}                                          
+            // jupiter: {'high': 89.08262406715185, 'low': 81.10740472097561}                                           
+            // mars: {'high': 27.058996539821955, 'low': 22.876361835005497}                                            
+            // earth: {'high': 18.179511520801732, 'low': 16.725292124066016}                                           
+            // venus: {'high': 13.288351891282018, 'low': 12.483628022382645}                                           
+            // mercury: {'high': 8.828342449357729, 'low': 4.072423664626422}
+
+            // ---------- Saturn ----------- //
+            var saturn_high_logr = Math.log(183.93228895793544)
+            var saturn_elipse_material = new THREE.LineBasicMaterial( { color : 0x007fff } );
+            var saturn_high_curve = new THREE.EllipseCurve(
+                0,  0,            // ax, aY
+                saturn_high_logr, saturn_high_logr,           // xRadius, yRadius
+                0,  2 * Math.PI,  // aStartAngle, aEndAngle
+                false,            // aClockwise
+                0                 // aRotation
+            );
+            var saturn_high_points = saturn_high_curve.getPoints( 50 );
+            var saturn_high_geometry = new THREE.BufferGeometry().setFromPoints( saturn_high_points );
+            var saturn_high = new THREE.Line( saturn_high_geometry, saturn_elipse_material );
+            saturn_high.position.set(0,0,0);
+            scene.add( saturn_high );
+
+            var saturn_low_logr = Math.log(153.88649309560518)
+            var saturn_low_curve = new THREE.EllipseCurve(
+                0,0, saturn_low_logr, saturn_low_logr, 0, 2*Math.PI, false, 0);
+            var saturn_low_points = saturn_low_curve.getPoints( 50 );
+            var saturn_low_geometry = new THREE.BufferGeometry().setFromPoints( saturn_low_points );
+            var saturn_low = new THREE.Line( saturn_low_geometry, saturn_elipse_material );
+            saturn_low.position.set(0,0,0);
+            scene.add( saturn_low );
+
+            // ---------- Jupiter ----------- //
+            var jupiter_high_logr = Math.log(89.08262406715185)
+            var jupiter_elipse_material = new THREE.LineBasicMaterial( { color : 0xff8000 } );
+            var jupiter_high_curve = new THREE.EllipseCurve(
+                0,0, jupiter_high_logr, jupiter_high_logr, 0, 2*Math.PI, false, 0);
+            var jupiter_high_points = jupiter_high_curve.getPoints( 50 );
+            var jupiter_high_geometry = new THREE.BufferGeometry().setFromPoints( jupiter_high_points );
+            var jupiter_high = new THREE.Line( jupiter_high_geometry, jupiter_elipse_material );
+            jupiter_high.position.set(0,0,0);
+            scene.add( jupiter_high );
+
+            var jupiter_low_logr = Math.log(81.10740472097561)
+            var jupiter_low_curve = new THREE.EllipseCurve(
+                0,0, jupiter_low_logr, jupiter_low_logr, 0, 2*Math.PI, false, 0);
+            var jupiter_low_points = jupiter_low_curve.getPoints( 50 );
+            var jupiter_low_geometry = new THREE.BufferGeometry().setFromPoints( jupiter_low_points );
+            var jupiter_low = new THREE.Line( jupiter_low_geometry, jupiter_elipse_material );
+            jupiter_low.position.set(0,0,0);
+            scene.add( jupiter_low );
+
+            // ---------- Mars ----------- //
+            var mars_high_logr = Math.log(27.058996539821955)
+            var mars_elipse_material = new THREE.LineBasicMaterial( { color : 0xff0000 } );
+            var mars_high_curve = new THREE.EllipseCurve(
+                0,0, mars_high_logr, mars_high_logr, 0, 2*Math.PI, false, 0);
+            var mars_high_points = mars_high_curve.getPoints( 50 );
+            var mars_high_geometry = new THREE.BufferGeometry().setFromPoints( mars_high_points );
+            var mars_high = new THREE.Line( mars_high_geometry, mars_elipse_material );
+            mars_high.position.set(0,0,0);
+            scene.add( mars_high );
+
+            var mars_low_logr = Math.log(22.876361835005497)
+            var mars_low_curve = new THREE.EllipseCurve(
+                0,0, mars_low_logr, mars_low_logr, 0, 2*Math.PI, false, 0);
+            var mars_low_points = mars_low_curve.getPoints( 50 );
+            var mars_low_geometry = new THREE.BufferGeometry().setFromPoints( mars_low_points );
+            var mars_low = new THREE.Line( mars_low_geometry, mars_elipse_material );
+            mars_low.position.set(0,0,0);
+            scene.add( mars_low );
+
+            // ---------- Earth ----------- //
+            var earth_high_logr = Math.log(18.179511520801732)
+            var earth_elipse_material = new THREE.LineBasicMaterial( { color : 0xdff7e0 } );
+            var earth_high_curve = new THREE.EllipseCurve(
+                0,0, earth_high_logr,earth_high_logr, 0, 2*Math.PI, false, 0);
+            var earth_high_points = earth_high_curve.getPoints( 50 );
+            var earth_high_geometry = new THREE.BufferGeometry().setFromPoints( earth_high_points );
+            var earth_high = new THREE.Line( earth_high_geometry, earth_elipse_material );
+            earth_high.position.set(0,0,0);
+            scene.add( earth_high );
+
+            var earth_low_logr = Math.log(16.725292124066016)
+            var earth_low_curve = new THREE.EllipseCurve(
+                0,0, earth_low_logr, earth_low_logr, 0, 2*Math.PI, false, 0);
+            var earth_low_points = earth_low_curve.getPoints( 50 );
+            var earth_low_geometry = new THREE.BufferGeometry().setFromPoints( earth_low_points );
+            var earth_low = new THREE.Line( earth_low_geometry, earth_elipse_material );
+            earth_low.position.set(0,0,0);
+            scene.add( earth_low );
+
+            // ---------- Venus ----------- //
+            var venus_high_logr = Math.log(13.288351891282018)
+            var venus_elipse_material = new THREE.LineBasicMaterial( { color : 0xc0c0ff } );
+            var venus_high_curve = new THREE.EllipseCurve(
+                0,0, venus_high_logr, venus_high_logr, 0, 2*Math.PI, false, 0);
+            var venus_high_points = venus_high_curve.getPoints( 50 );
+            var venus_high_geometry = new THREE.BufferGeometry().setFromPoints( venus_high_points );
+            var venus_high = new THREE.Line( venus_high_geometry, venus_elipse_material );
+            venus_high.position.set(0,0,0);
+            scene.add( venus_high );
+
+            var venus_low_logr = Math.log(12.483628022382645)
+            var venus_low_curve = new THREE.EllipseCurve(
+                0,0, venus_low_logr, venus_low_logr, 0, 2*Math.PI, false, 0);
+            var venus_low_points = venus_low_curve.getPoints( 50 );
+            var venus_low_geometry = new THREE.BufferGeometry().setFromPoints( venus_low_points );
+            var venus_low = new THREE.Line( venus_low_geometry, venus_elipse_material );
+            venus_low.position.set(0,0,0);
+            scene.add( venus_low );
+
+            // ---------- Mercury ----------- //
+            var mercury_high_logr = Math.log(8.828342449357729)
+            var mercury_elipse_material = new THREE.LineBasicMaterial( { color : 0x80ffc0 } );
+            var mercury_high_curve = new THREE.EllipseCurve(
+                0,0, mercury_high_logr, mercury_high_logr, 0, 2*Math.PI, false, 0);
+            var mercury_high_points = mercury_high_curve.getPoints( 50 );
+            var mercury_high_geometry = new THREE.BufferGeometry().setFromPoints( mercury_high_points );
+            var mercury_high = new THREE.Line( mercury_high_geometry, mercury_elipse_material );
+            mercury_high.position.set(0,0,0);
+            scene.add( mercury_high );
+
+            var mercury_low_logr = Math.log(4.072423664626422)
+            var mercury_low_curve = new THREE.EllipseCurve(
+                0,0, mercury_low_logr, mercury_low_logr, 0, 2*Math.PI, false, 0);
+            var mercury_low_points = mercury_low_curve.getPoints( 50 );
+            var mercury_low_geometry = new THREE.BufferGeometry().setFromPoints( mercury_low_points );
+            var mercury_low = new THREE.Line( mercury_low_geometry, mercury_elipse_material );
+            mercury_low.position.set(0,0,0);
+            scene.add( mercury_low );
+
+            // Platonic Solid Radii - Computed from Kepler's Mysterium Ch.XIII (src/solid_positions.py)
+            // cube: 88.79250651616418
+            // cube_edge: 177.738899525424
+            // pyramid: 27.008765772084878
+            // dodecahedron: 18.18670765882937
+            // icosohedron: 13.296607238632484
+            // octohedron: 7.2030533689147855
+
+            // BoxBufferGeometry takes the length of the box edges
+            // Kepler gives the radius of the circumscribing sphere
+            // so first reduce the radius to its log, then Pythagorean theorem to get the edge
+            //var cube_logr = Math.log(88.79250651616418);
+            var cube_logr = saturn_low_logr
+            var cube_loge = Math.sqrt(2 * Math.pow(cube_logr, 2))
+            var cube_geometry =	new THREE.BoxBufferGeometry( cube_loge, cube_loge, cube_loge );
+            // The rest of the solids take a
+            var tetrahedron_logr = Math.log(88.79250651616418);
+            var tetrahedron_geometry =	new THREE.TetrahedronBufferGeometry( tetrahedron_logr );
+            var dodecahedron_logr = Math.log(27.008765772084878);
+			var dodecahedron_geometry =	new THREE.DodecahedronBufferGeometry( dodecahedron_logr );
+            var icosohedron_logr = Math.log(18.18670765882937);
+			var icosohedron_geometry =	new THREE.IcosahedronBufferGeometry( icosohedron_logr );
+            var octahedron_logr = Math.log(13.296607238632484);
+			var octahedron_geometry =	new THREE.OctahedronBufferGeometry( octahedron_logr );
+
+			var edge_material = new THREE.MeshBasicMaterial( 
+				{ color: 0x00ff00, wireframe: true, opacity: 0.5 } );
+
+			var cube = new THREE.Mesh( cube_geometry, edge_material );
+			var tetrahedron = new THREE.Mesh( tetrahedron_geometry, edge_material );
+			var dodecahedron = new THREE.Mesh( dodecahedron_geometry, edge_material );
+			var icosohedron = new THREE.Mesh( icosohedron_geometry, edge_material );
+			var octahedron = new THREE.Mesh( octahedron_geometry, edge_material );
+
+			scene.add( cube );
+            scene.add( tetrahedron );
+			scene.add( dodecahedron );
+			scene.add( icosohedron );
+            scene.add( octahedron );
+
+            // controls
+            var controls = new THREE.OrbitControls( camera, renderer.domElement );
+            controls.addEventListener( 'change', render );
+            controls.enableZoom = true;
+			
+            function animate() {
+				requestAnimationFrame( animate );
+                //cube.rotation.x += 0.001;
+				//cube.rotation.y += 0.001;
+				// tetrahedron.rotation.x += 0.002;
+				// tetrahedron.rotation.y += 0.002;
+				//dodecahedron.rotation.x += 0.004;
+				//dodecahedron.rotation.y += 0.004;
+				//icosohedron.rotation.x += 0.008;
+				//icosohedron.rotation.y += 0.008;								
+				//octahedron.rotation.x += 0.016;
+				//octahedron.rotation.y += 0.016;
+				render();
+				//stats.update();
+				window.addEventListener( 'resize', onWindowResize, false );
+			}
+			function onWindowResize() {
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+			}
+			function render() {
+				renderer.render( scene, camera );
+			}
+			animate();
+		</script>
+	</body>
+</html>

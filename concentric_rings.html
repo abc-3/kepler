@@ -16,12 +16,19 @@
 			// Perspective is one of a few cameras
 			// FOV - first param is in degrees
 			var camera = new THREE.PerspectiveCamera( 
-				80, window.innerWidth / window.innerHeight, 1, 500 );
+				70, window.innerWidth / window.innerHeight, 1, 20 );
             var scene = new THREE.Scene();
             var renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
-            camera.position.z = 300;
+            camera.position.z = 8;
+
+            // controls
+            document.addEventListener( 'mousewheel', onDocumentMouseWheel, false );
+            controls = new THREE.OrbitControls( camera, renderer.domElement );
+            controls.addEventListener( 'change', render ); // use if there is no animation loop
+            controls.minDistance = 7;
+            controls.maxDistance = 100;
 
             // Ellipse class, which extends the virtual base class Curve
             function Ellipse( xRadius, yRadius ) {
@@ -30,121 +37,136 @@
                 this.xRadius = xRadius;
                 this.yRadius = yRadius;
             }
-            var elipse_material = new THREE.LineBasicMaterial( { color : 0x00ffff } );
-
+            
+            // Distances Computed from Kepler's Mysterium Ch.XV
             // saturn: {'high': 183.93228895793544, 'low': 153.88649309560518}                                          
             // jupiter: {'high': 89.08262406715185, 'low': 81.10740472097561}                                           
             // mars: {'high': 27.058996539821955, 'low': 22.876361835005497}                                            
             // earth: {'high': 18.179511520801732, 'low': 16.725292124066016}                                           
             // venus: {'high': 13.288351891282018, 'low': 12.483628022382645}                                           
             // mercury: {'high': 8.828342449357729, 'low': 4.072423664626422}
+
+            // ---------- Saturn ----------- //
+            var saturn_elipse_material = new THREE.LineBasicMaterial( { color : 0x007fff } );
             var saturn_high_curve = new THREE.EllipseCurve(
                 0,  0,            // ax, aY
-                183.93228895793544, 183.93228895793544,           // xRadius, yRadius
+                Math.log(183.93228895793544), Math.log(183.93228895793544),           // xRadius, yRadius
                 0,  2 * Math.PI,  // aStartAngle, aEndAngle
                 false,            // aClockwise
                 0                 // aRotation
             );
             var saturn_high_points = saturn_high_curve.getPoints( 50 );
             var saturn_high_geometry = new THREE.BufferGeometry().setFromPoints( saturn_high_points );
-            var saturn_high = new THREE.Line( saturn_high_geometry, elipse_material );
+            var saturn_high = new THREE.Line( saturn_high_geometry, saturn_elipse_material );
             saturn_high.position.set(0,0,0);
             scene.add( saturn_high );
 
             var saturn_low_curve = new THREE.EllipseCurve(
-                0,0, 153.88649309560518, 153.88649309560518, 0, 2*Math.PI, false, 0);
+                0,0, Math.log(153.88649309560518), Math.log(153.88649309560518), 0, 2*Math.PI, false, 0);
             var saturn_low_points = saturn_low_curve.getPoints( 50 );
             var saturn_low_geometry = new THREE.BufferGeometry().setFromPoints( saturn_low_points );
-            var saturn_low = new THREE.Line( saturn_low_geometry, elipse_material );
+            var saturn_low = new THREE.Line( saturn_low_geometry, saturn_elipse_material );
             saturn_low.position.set(0,0,0);
             scene.add( saturn_low );
 
+            // ---------- Jupiter ----------- //
+            var jupiter_elipse_material = new THREE.LineBasicMaterial( { color : 0xff8000 } );
             var jupiter_high_curve = new THREE.EllipseCurve(
-                0,0, 89.08262406715185, 89.08262406715185, 0, 2*Math.PI, false, 0);
+                0,0, Math.log(89.08262406715185), Math.log(89.08262406715185), 0, 2*Math.PI, false, 0);
             var jupiter_high_points = jupiter_high_curve.getPoints( 50 );
             var jupiter_high_geometry = new THREE.BufferGeometry().setFromPoints( jupiter_high_points );
-            var jupiter_high = new THREE.Line( jupiter_high_geometry, elipse_material );
+            var jupiter_high = new THREE.Line( jupiter_high_geometry, jupiter_elipse_material );
             jupiter_high.position.set(0,0,0);
-            scene.add( saturn_high );
+            scene.add( jupiter_high );
 
             var jupiter_low_curve = new THREE.EllipseCurve(
-                0,0, 81.10740472097561, 81.10740472097561, 0, 2*Math.PI, false, 0);
+                0,0, Math.log(81.10740472097561), Math.log(81.10740472097561), 0, 2*Math.PI, false, 0);
             var jupiter_low_points = jupiter_low_curve.getPoints( 50 );
             var jupiter_low_geometry = new THREE.BufferGeometry().setFromPoints( jupiter_low_points );
-            var jupiter_low = new THREE.Line( jupiter_low_geometry, elipse_material );
+            var jupiter_low = new THREE.Line( jupiter_low_geometry, jupiter_elipse_material );
             jupiter_low.position.set(0,0,0);
-            scene.add( saturn_low );
+            scene.add( jupiter_low );
 
+            // ---------- Mars ----------- //
+            var mars_elipse_material = new THREE.LineBasicMaterial( { color : 0xff0000 } );
             var mars_high_curve = new THREE.EllipseCurve(
-                0,0, 27.058996539821955, 27.058996539821955, 0, 2*Math.PI, false, 0);
+                0,0, Math.log(27.058996539821955), Math.log(27.058996539821955), 0, 2*Math.PI, false, 0);
             var mars_high_points = mars_high_curve.getPoints( 50 );
             var mars_high_geometry = new THREE.BufferGeometry().setFromPoints( mars_high_points );
-            var mars_high = new THREE.Line( mars_high_geometry, elipse_material );
+            var mars_high = new THREE.Line( mars_high_geometry, mars_elipse_material );
             mars_high.position.set(0,0,0);
             scene.add( mars_high );
 
             var mars_low_curve = new THREE.EllipseCurve(
-                0,0, 22.876361835005497, 22.876361835005497, 0, 2*Math.PI, false, 0);
+                0,0, Math.log(22.876361835005497), Math.log(22.876361835005497), 0, 2*Math.PI, false, 0);
             var mars_low_points = mars_low_curve.getPoints( 50 );
             var mars_low_geometry = new THREE.BufferGeometry().setFromPoints( mars_low_points );
-            var mars_low = new THREE.Line( mars_low_geometry, elipse_material );
+            var mars_low = new THREE.Line( mars_low_geometry, mars_elipse_material );
             mars_low.position.set(0,0,0);
             scene.add( mars_low );
 
+            // ---------- Earth ----------- //
+            var earth_elipse_material = new THREE.LineBasicMaterial( { color : 0xdff7e0 } );
             var earth_high_curve = new THREE.EllipseCurve(
-                0,0, 18.179511520801732, 18.179511520801732, 0, 2*Math.PI, false, 0);
+                0,0, Math.log(18.179511520801732), Math.log(18.179511520801732), 0, 2*Math.PI, false, 0);
             var earth_high_points = earth_high_curve.getPoints( 50 );
             var earth_high_geometry = new THREE.BufferGeometry().setFromPoints( earth_high_points );
-            var earth_high = new THREE.Line( earth_high_geometry, elipse_material );
+            var earth_high = new THREE.Line( earth_high_geometry, earth_elipse_material );
             earth_high.position.set(0,0,0);
             scene.add( earth_high );
 
             var earth_low_curve = new THREE.EllipseCurve(
-                0,0, 16.725292124066016, 16.725292124066016, 0, 2*Math.PI, false, 0);
+                0,0, Math.log(16.725292124066016), Math.log(16.725292124066016), 0, 2*Math.PI, false, 0);
             var earth_low_points = earth_low_curve.getPoints( 50 );
             var earth_low_geometry = new THREE.BufferGeometry().setFromPoints( earth_low_points );
-            var earth_low = new THREE.Line( earth_low_geometry, elipse_material );
+            var earth_low = new THREE.Line( earth_low_geometry, earth_elipse_material );
             earth_low.position.set(0,0,0);
             scene.add( earth_low );
 
+            // ---------- Venus ----------- //
+            var venus_elipse_material = new THREE.LineBasicMaterial( { color : 0xc0c0ff } );
             var venus_high_curve = new THREE.EllipseCurve(
-                0,0, 13.288351891282018, 13.288351891282018, 0, 2*Math.PI, false, 0);
+                0,0, Math.log(13.288351891282018), Math.log(13.288351891282018), 0, 2*Math.PI, false, 0);
             var venus_high_points = venus_high_curve.getPoints( 50 );
             var venus_high_geometry = new THREE.BufferGeometry().setFromPoints( venus_high_points );
-            var venus_high = new THREE.Line( venus_high_geometry, elipse_material );
+            var venus_high = new THREE.Line( venus_high_geometry, venus_elipse_material );
             venus_high.position.set(0,0,0);
             scene.add( venus_high );
 
             var venus_low_curve = new THREE.EllipseCurve(
-                0,0, 12.483628022382645, 12.483628022382645, 0, 2*Math.PI, false, 0);
+                0,0, Math.log(12.483628022382645), Math.log(12.483628022382645), 0, 2*Math.PI, false, 0);
             var venus_low_points = venus_low_curve.getPoints( 50 );
             var venus_low_geometry = new THREE.BufferGeometry().setFromPoints( venus_low_points );
-            var venus_low = new THREE.Line( venus_low_geometry, elipse_material );
+            var venus_low = new THREE.Line( venus_low_geometry, venus_elipse_material );
             venus_low.position.set(0,0,0);
             scene.add( venus_low );
 
+            // ---------- Mercury ----------- //
+            var mercury_elipse_material = new THREE.LineBasicMaterial( { color : 0x80ffc0 } );
             var mercury_high_curve = new THREE.EllipseCurve(
-                0,0, 8.828342449357729, 8.828342449357729, 0, 2*Math.PI, false, 0);
+                0,0, Math.log(8.828342449357729), Math.log(8.828342449357729), 0, 2*Math.PI, false, 0);
             var mercury_high_points = mercury_high_curve.getPoints( 50 );
             var mercury_high_geometry = new THREE.BufferGeometry().setFromPoints( mercury_high_points );
-            var mercury_high = new THREE.Line( mercury_high_geometry, elipse_material );
+            var mercury_high = new THREE.Line( mercury_high_geometry, mercury_elipse_material );
             mercury_high.position.set(0,0,0);
             scene.add( mercury_high );
 
             var mercury_low_curve = new THREE.EllipseCurve(
-                0,0, 4.072423664626422, 4.072423664626422, 0, 2*Math.PI, false, 0);
+                0,0, Math.log(4.072423664626422), Math.log(4.072423664626422), 0, 2*Math.PI, false, 0);
             var mercury_low_points = mercury_low_curve.getPoints( 50 );
             var mercury_low_geometry = new THREE.BufferGeometry().setFromPoints( mercury_low_points );
-            var mercury_low = new THREE.Line( mercury_low_geometry, elipse_material );
+            var mercury_low = new THREE.Line( mercury_low_geometry, mercury_elipse_material );
             mercury_low.position.set(0,0,0);
             scene.add( mercury_low );
-
-            // controls
-            controls = new THREE.OrbitControls( camera, renderer.domElement );
-            controls.addEventListener( 'change', render ); // use if there is no animation loop
-            controls.minDistance = 10;
-            controls.maxDistance = 300;
 			
+            function onDocumentMouseWheel( event ) {
+                var fovMAX = 160;
+                var fovMIN = 1;
+                camera.fov -= event.wheelDeltaY * 0.05;
+                camera.fov = Math.max( Math.min( camera.fov, fovMAX ), fovMIN );
+                camera.projectionMatrix = new THREE.Matrix4().makePerspective(
+                camera.fov, window.innerWidth / window.innerHeight, camera.near, camera.far);
+            }
 			function animate() {
 				requestAnimationFrame( animate );
 				render();
