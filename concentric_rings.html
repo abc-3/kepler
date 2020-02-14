@@ -24,7 +24,7 @@
             camera.position.z = 8;
 
             // controls
-            document.addEventListener( 'mousewheel', onDocumentMouseWheel, false );
+            document.addEventListener( 'mousewheel', onDocumentMouseWheel, true );
             controls = new THREE.OrbitControls( camera, renderer.domElement );
             controls.addEventListener( 'change', render ); // use if there is no animation loop
             controls.minDistance = 7;
