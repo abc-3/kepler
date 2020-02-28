@@ -2,8 +2,17 @@ import sys, os
 import numpy as np
 
 """
+Planetary distances based on Keplerean elements
+
+"""
+
+
+
+
+
+"""
 Kepler's distances of the planets from the Sun
-The Moon is included the Earth's sweep
+The Moon is included with the Earth
 """
 planet_deg = {
 
@@ -26,13 +35,13 @@ def compute_ds(w):
             distances[planet][k] = dist
     return distances
 
-
+"""
 # compute whole sine = 1000
 planets = compute_ds(1000)
 # print the high & low distances for each planet
 for k, v in planets.items():
     print("{}: {}".format(k, v))
-"""
+
 saturn: {'high': 183.93228895793544, 'low': 153.88649309560518}
 jupiter: {'high': 89.08262406715185, 'low': 81.10740472097561}
 mars: {'high': 27.058996539821955, 'low': 22.876361835005497}
