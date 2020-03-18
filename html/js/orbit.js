@@ -22,9 +22,9 @@
 // That is, include this js file and wherever you see:
 //    	controls = new THREE.TrackballControls( camera );
 //      controls.target.z = 150;
-// Simple substitute "OrbitControls" and the control should work as-is.
+// Simple substitute "orbit" and the control should work as-is.
 
-THREE.OrbitControls = function ( object, domElement, localElement ) {
+THREE.orbit = function ( object, domElement, localElement ) {
 
 	this.object = object;
 	this.domElement = ( domElement !== undefined ) ? domElement : document;
@@ -182,7 +182,7 @@ THREE.OrbitControls = function ( object, domElement, localElement ) {
 		} else {
 
 			// camera neither orthographic or perspective - warn user
-			console.warn( 'WARNING: OrbitControls.js encountered an unknown camera type - pan disabled.' );
+			console.warn( 'WARNING: orbit.js encountered an unknown camera type - pan disabled.' );
 
 		}
 
@@ -584,4 +584,4 @@ THREE.OrbitControls = function ( object, domElement, localElement ) {
 
 };
 
-THREE.OrbitControls.prototype = Object.create( THREE.EventDispatcher.prototype );
+THREE.orbit.prototype = Object.create( THREE.EventDispatcher.prototype );
