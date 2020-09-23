@@ -1,181 +1,50 @@
 <!DOCTYPE html>
 <html>
 	<head>
+                <!-- <link rel="stylesheet" href="css/style.css"> -->
 		<meta charset="utf-8">
 		<title>Galactic Watch</title>
 		<style>
 			body { margin: 0; }
 			canvas { width: 100%; height: 100% }
-        </style>
-        <link rel="stylesheet" type="text/css" href="js/dat.gui.css">
+                </style>
 	</head>
 	<body>
-        <script src="js/three.js"></script>
-        <script src="js/trackball.js"></script>
-        <script src="js/transform.js"></script>
-        <script src="js/planets.js"></script>
-        <script src="js/shapes.js"></script>
-        <script src="js/zodiac.js"></script>
-        <script src="js/dat.gui.js"></script>
-        <script src="js/solids.js"></script>
-        <script>
-            var scene, renderer;
-            var camera, controls, rotateSpeed, zoomSpeed;
+                <canvas id="canvas"></canvas>
 
-            init();
-            createObjects();
-            animate();
+                <script src="js/core/three.js"></script>
+                <script src="js/core/trackball.js"></script>
+                <script src="js/core/transform.js"></script>
+                <script src="js/core/dat.gui.js"></script>
+                <script src="js/core/gltfloader.js"></script>
 
-            // init the scene
-            function init() {
-                renderer = new THREE.WebGLRenderer({
-                    preserveDrawingBuffer: true // to allow screenshot
-                });
-                document.body.appendChild(renderer.domElement);
-
-                // create a scene
-                scene = new THREE.Scene();
-
-                // put a camera in the scene
-                camera = new THREE.PerspectiveCamera( 
-                    50, window.innerWidth / window.innerHeight, 1, 2000 );
-                camera.position.z = 150;
-                camera.position.x = 0;
-                camera.position.y = -500;
-                scene.add(camera);
-                // add light
-                var light = new THREE.PointLight( 0xffffff, 0.7 );
-                camera.add( light );
-
-                // update camera and renderer to fit the window size
-                function resize() {
-                    var aspect = window.innerWidth / window.innerHeight;
-                    camera.aspect = aspect;
-                    camera.fov = 45/((aspect+1)/2);
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                }
-                window.addEventListener('resize', resize, false);
-                resize();
-
-                // create a camera control
-                initCamControls();
-            }
-
-            function initCamControls() {
-                controls = new THREE.trackball(camera, renderer.domElement);
-                controls.minDistance = 5;
-                controls.maxDistance = 1200;
-                controls.rotateSpeed = 2;
-                controls.zoomSpeed = 1.2;
-            }
-
-            function createObjects() {
-                // data controls
-                var gui = new dat.GUI();
-                var saturn = gui.addFolder('Saturn');
-                saturn.add(Saturn, 'innerRing');
-                saturn.add(Saturn, 'outerRing');
-                saturn.add(Saturn, 'innerSphere');
-                saturn.add(Saturn, 'outerSphere');
-                saturn.add(Saturn, 'heightSegments');
-                saturn.add(Saturn, 'widthSegments');
-                saturn.add(Saturn, 'phiStart');
-                saturn.add(Saturn, 'phiLength');
-                saturn.add(Saturn, 'thetaStart');
-                saturn.add(Saturn, 'thetaLength');
-
-                var jupiter = gui.addFolder('Jupiter');
-                jupiter.add(Jupiter, 'innerRing');
-                jupiter.add(Jupiter, 'outerRing');
-                jupiter.add(Jupiter, 'innerSphere');
-                jupiter.add(Jupiter, 'outerSphere');
-                jupiter.add(Jupiter, 'heightSegments');
-                jupiter.add(Jupiter, 'widthSegments');
-                jupiter.add(Jupiter, 'phiStart');
-                jupiter.add(Jupiter, 'phiLength');
-                jupiter.add(Jupiter, 'thetaStart');
-                jupiter.add(Jupiter, 'thetaLength');
-
-                var mars = gui.addFolder('Mars');
-                mars.add(Mars, 'innerRing');
-                mars.add(Mars, 'outerRing');
-                mars.add(Mars, 'innerSphere');
-                mars.add(Mars, 'outerSphere');
-                mars.add(Mars, 'heightSegments');
-                mars.add(Mars, 'widthSegments');
-                mars.add(Mars, 'phiStart');
-                mars.add(Mars, 'phiLength');
-                mars.add(Mars, 'thetaStart');
-                mars.add(Mars, 'thetaLength');
-
-                var earth = gui.addFolder('Earth');
-                earth.add(Earth, 'innerRing');
-                earth.add(Earth, 'outerRing');
-                earth.add(Earth, 'innerSphere');
-                earth.add(Earth, 'outerSphere');
-                earth.add(Earth, 'heightSegments');
-                earth.add(Earth, 'widthSegments');
-                earth.add(Earth, 'phiStart');
-                earth.add(Earth, 'phiLength');
-                earth.add(Earth, 'thetaStart');
-                earth.add(Earth, 'thetaLength');
-
-                var venus = gui.addFolder('Venus');
-                venus.add(Venus, 'innerRing');
-                venus.add(Venus, 'outerRing');
-                venus.add(Venus, 'innerSphere');
-                venus.add(Venus, 'outerSphere');
-                venus.add(Venus, 'heightSegments');
-                venus.add(Venus, 'widthSegments');
-                venus.add(Venus, 'phiStart');
-                venus.add(Venus, 'phiLength');
-                venus.add(Venus, 'thetaStart');
-                venus.add(Venus, 'thetaLength');               
-
-                var mercury = gui.addFolder('Mercury');
-                mercury.add(Mercury, 'innerRing');
-                mercury.add(Mercury, 'outerRing');
-                mercury.add(Mercury, 'innerSphere');
-                mercury.add(Mercury, 'outerSphere');
-                mercury.add(Mercury, 'heightSegments');
-                mercury.add(Mercury, 'widthSegments');
-                mercury.add(Mercury, 'phiStart');
-                mercury.add(Mercury, 'phiLength');
-                mercury.add(Mercury, 'thetaStart');
-                mercury.add(Mercury, 'thetaLength');  
-
-                // Zodiac Ring
-                scene.add( zodiacRing );
-
-                // Solids
-                // scene.add( cube );
-                // scene.add( tetrahedron );
-                // scene.add( dodecahedron );
-                // scene.add( icosahedron );
-                // scene.add( octahedron );
-
-                // scene.add( new THREE.AxesHelper( 200 ) );
-                // scene.add(control);
-
-            }
-            // animation loop
-            function animate() {
-                requestAnimationFrame( animate );
-
-                // do the render
-                render();
-            }
-            // render the scene
-            function render() {
-                controls.update();  
-                    // required if controls.enableDamping = true, 
-                    // or if controls.autoRotate = true
-                // actually render the scene
-                renderer.render(scene, camera);
-            }
-            
-		</script>
+                <script src="js/elem/planets.js"></script>
+                <script src="js/elem/shapes.js"></script>
+                <script src="js/elem/zodiac.js"></script>
+                <script src="js/elem/solids.js"></script>
+                <script src="js/elem/system.js"></script>
+                <script src="js/elem/controllers.js"></script>
+                <script src="js/manager.js"></script>
+                <script src="index.js"></script>
+                
+                <!--div id="controls">
+                        <div id="bodylock">
+                                Lock on:
+                        </div>
+                        <div style="margin-top: 10px;"></div>
+                                Size distortion:
+                                <br/>
+                                <input id="size-control" class="slider-control" type="range" min="1" max="2000" value="1" step="1" oninput="onBodyDistortionChange(this.value)">
+                                <span id="bodydistortion-val">1</span>x
+                        </div>
+                </div>
+                <div id="info">
+                        <span id="au-100px-scale"></span>&nbsp;AU
+                        <svg width="100px" height="6px">
+                                <path d="M0,0V6H100V0" stroke="darkgrey" stroke-width="1.5" fill="transparent"></path>
+                        </svg>
+                        (scroll to zoom)
+                </div> -->
 	</body>
 </html>
 
