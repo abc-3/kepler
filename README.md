@@ -1,6 +1,6 @@
 Kepler's Concentric Solids
 ----------------------------------------------------------------------------------
-[Three.js](https://threejs.org/) replica of Kepler's solar system based on the Platonic Solids
+Three.js replica of Kepler's solar system based on the Platonic Solids
 
 [This example](http://13.91.141.66/) uses the following libraries:
 
