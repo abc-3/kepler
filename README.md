@@ -4,11 +4,10 @@ The aim of this project is a three.js replica of Kepler's solar system model, ba
 
 Kepler, Johannes, and E J. Aiton. The Secret of the Universe =: Mysterium Cosmographicum. New York: Abaris Books, 1981. Print.
 
-[three.js demo](http://13.91.141.66/) has the following dependencies that are included in the repository:
+[Working demo](http://13.91.141.66/) has dependencies included:
 
- * three.js
- * dat.gui.js
- * transform.js
- * gltfloader.js
- * trackball.js
+ * three.js (https://threejs.org/)
+ * dat.gui.js (https://github.com/dataarts/dat.gui)
+ * transform.js (https://threejs.org/docs/#examples/en/controls/TransformControls)
+ * trackball.js (https://threejs.org/docs/#examples/en/controls/TrackballControls)
 
