@@ -6,8 +6,8 @@ Kepler, Johannes, and E J. Aiton. The Secret of the Universe =: Mysterium Cosmog
 
 [Working demo](http://13.91.141.66/) has dependencies included:
 
- * three.js (https://threejs.org/)
- * dat.gui.js (https://github.com/dataarts/dat.gui)
- * transform.js (https://threejs.org/docs/#examples/en/controls/TransformControls)
- * trackball.js (https://threejs.org/docs/#examples/en/controls/TrackballControls)
+ * [three.js](https://threejs.org/)
+ * [dat.gui.js](https://github.com/dataarts/dat.gui)
+ * [transform.js](https://threejs.org/docs/#examples/en/controls/TransformControls)
+ * [trackball.js](https://threejs.org/docs/#examples/en/controls/TrackballControls)
 
