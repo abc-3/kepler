@@ -1,4 +1,4 @@
-Kepler's Concentric Solids
+Kepler MC Solar System Model
 ----------------------------------------------------------------------------------
 Three.js replica of Kepler's solar system model based on the [Platonic solids](https://en.wikipedia.org/wiki/Platonic_solid):
 
