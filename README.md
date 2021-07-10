@@ -1,6 +1,6 @@
 Kepler MC Solar System Model
 ----------------------------------------------------------------------------------
-The aim of this project is a three.js replica of Kepler's solar system model, based on a specific concentic arrangement of the [Platonic solids](https://en.wikipedia.org/wiki/Platonic_solid):
+The aim of this project is a three.js replica of the solar system model described in [Mysterium Cosmographicum](https://en.wikipedia.org/wiki/Mysterium_Cosmographicum), based on a concentic arrangement of the [Platonic solids](https://en.wikipedia.org/wiki/Platonic_solid):
 
 Kepler, Johannes, and E J. Aiton. The Secret of the Universe =: Mysterium Cosmographicum. New York: Abaris Books, 1981. Print.
 
