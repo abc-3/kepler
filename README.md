@@ -9,4 +9,4 @@ The aim of this project is a three.js replica of the solar system model describe
  * [transform.js](https://threejs.org/docs/#examples/en/controls/TransformControls)
  * [trackball.js](https://threejs.org/docs/#examples/en/controls/TrackballControls)
 
-Kepler, Johannes, and E J. Aiton. The Secret of the Universe =: Mysterium Cosmographicum. New York: Abaris Books, 1981. Print.
+
