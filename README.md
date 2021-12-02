@@ -1,4 +1,4 @@
-Kepler MC Solar System Model
+Kepler Solar System
 ----------------------------------------------------------------------------------
 The aim of this project is a three.js replica of the solar system model described in [Mysterium Cosmographicum](https://en.wikipedia.org/wiki/Mysterium_Cosmographicum), based on a concentic arrangement of the [Platonic solids](https://en.wikipedia.org/wiki/Platonic_solid).
 
