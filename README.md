@@ -9,6 +9,6 @@ three.js replica of the solar system model based on a concentic arrangement of t
  * [dat.gui.js](https://github.com/dataarts/dat.gui)
  * [transform.js](https://threejs.org/docs/#examples/en/controls/TransformControls)
  * [trackball.js](https://threejs.org/docs/#examples/en/controls/TrackballControls)
- * [Mysterium Cosmographicum](https://en.wikipedia.org/wiki/Mysterium_Cosmographicum)
+ * [MC-Kepler](https://en.wikipedia.org/wiki/Mysterium_Cosmographicum)
 
 
