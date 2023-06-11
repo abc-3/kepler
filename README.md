@@ -1,8 +1,6 @@
 Kepler's Solar System
 ----------------------------------------------------------------------------------
-A solar system model based on [Mysterium Cosmographicum](https://en.wikipedia.org/wiki/Mysterium_Cosmographicum)
-
-[Platonic solids](https://en.wikipedia.org/wiki/Platonic_solid).
+A solar system model from [Mysterium Cosmographicum](https://en.wikipedia.org/wiki/Mysterium_Cosmographicum) based on [Platonic solids](https://en.wikipedia.org/wiki/Platonic_solid).
 
 ### Dependencies
  * [three.js](https://threejs.org/)
