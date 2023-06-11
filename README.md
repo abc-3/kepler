@@ -1,14 +1,12 @@
-Kepler Solar System
+Kepler's Solar System
 ----------------------------------------------------------------------------------
-three.js replica of the solar system model based on a concentic arrangement of the [Platonic solids](https://en.wikipedia.org/wiki/Platonic_solid).
+A solar system model based on [Mysterium Cosmographicum](https://en.wikipedia.org/wiki/Mysterium_Cosmographicum)
 
-- nested shapes according to the orbit of the planets: [solar-system model](http://13.91.141.66/)
+[Platonic solids](https://en.wikipedia.org/wiki/Platonic_solid).
 
-### Sources
+### Dependencies
  * [three.js](https://threejs.org/)
  * [dat.gui.js](https://github.com/dataarts/dat.gui)
  * [transform.js](https://threejs.org/docs/#examples/en/controls/TransformControls)
  * [trackball.js](https://threejs.org/docs/#examples/en/controls/TrackballControls)
- * [MC-Kepler](https://en.wikipedia.org/wiki/Mysterium_Cosmographicum)
-
 
