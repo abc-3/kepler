@@ -1,0 +1,19 @@
+{
+    "name": "kepler",
+    "version": "1.0.0",
+    "description": "Kepler's Solar System: A solar system model from [Mysterium Cosmographicum](https://en.wikipedia.org/wiki/Mysterium_Cosmographicum) based on [Platonic solids](https://en.wikipedia.org/wiki/Platonic_solid).",
+    "main": "manager.js",
+    "directories": {
+        "example": "examples",
+        "lib": "lib"
+    },
+    "scripts": {
+        "deploy": "gh-pages -d dist",
+        "test": "echo \"Error: no test s.pecified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "gh-pages": "^6.1.1"
+    }
+}
