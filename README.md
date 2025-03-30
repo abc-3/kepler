@@ -1,4 +1,4 @@
-Kepler's Solar System
+Kepler's Mysterium Cosmigraphicum Model
 ----------------------------------------------------------------------------------
 A solar system model from [Mysterium Cosmographicum](https://en.wikipedia.org/wiki/Mysterium_Cosmographicum) based on [Platonic solids](https://en.wikipedia.org/wiki/Platonic_solid).
 
@@ -10,4 +10,4 @@ A solar system model from [Mysterium Cosmographicum](https://en.wikipedia.org/wi
 
 
 ### GitHub Pages Demo
-[Working Demo](https://abc-3.github.io/keplermc)
+[Working Demo](https://abc-3.github.io/kmc)
