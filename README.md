@@ -10,4 +10,4 @@ A solar system model from [Mysterium Cosmographicum](https://en.wikipedia.org/wi
 
 
 ### GitHub Pages Demo
-[https://abc-3.github.io/kepler](https://abc-3.github.io/kepler)
+[Working Demo](https://abc-3.github.io/keplers-mc)
